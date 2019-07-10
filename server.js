@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // Routes
 const users = require('./routes/api/users');
@@ -10,23 +11,31 @@ const posts = require('./routes/api/posts');
 const app = express();
 
 // body parser middleware
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(bodyParser.json());
 
 // DB config
 const db = require('./config/keys').mongoURI;
 
 // fixing deprecations
-mongoose.set('useFindAndModify', false); 
+mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 // connect to mongoDB
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(db, {
+    useNewUrlParser: true
+  })
   .then(() => {
     console.log('mongoDB connectes');
   })
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send("Hello world"));
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require('./config/passport')(passport);
 
 // use Routes
 app.use('/api/users', users);
