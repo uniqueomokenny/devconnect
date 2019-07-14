@@ -234,7 +234,8 @@ router.delete('/experience/:exp_id', passport.authenticate('jwt', {session: fals
 router.delete('/education/:edu_id', passport.authenticate('jwt', {session: false}), (req, res) => {
   Profile.findOne({user: req.user.id})
     .then(profile => {
-      // Get removeIndex
+      // Get removeIndex - this logic is not working
+      // will use the filter method later
       const removeIndex = profile.education.indexOf(req.params.exp_id);
       // console.log(removeIndex)
 
