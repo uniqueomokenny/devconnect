@@ -4,6 +4,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextareaFieldGroup from '../common/TextareaFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addExperience } from '../../actions/profileAction';
 
 class AddExperience extends Component {
   constructor(props) {
@@ -38,22 +39,40 @@ class AddExperience extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+
+    const expData = {
+      company: this.state.company,
+      title: this.state.title,
+      location: this.state.location,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+      description: this.state.description,
+    }
+
+    this.props.addExperience(expData, this.props.history);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   render() {
     const { errors } = this.state;
 
     return (
-      <div class="section add-experience">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 m-auto">
-              <Link to="/dashboard" class="btn btn-light">
+      <div className="section add-experience">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 m-auto">
+              <Link to="/dashboard" className="btn btn-light">
                 Go Back
             </Link>
-              <h1 class="display-4 text-center">Add Your Experience</h1>
-              <p class="lead text-center">Add any developer/programming positions that you have had in the past</p>
-              <small class="d-block pb-3">* are required field</small>
+              <h1 className="display-4 text-center">Add Your Experience</h1>
+              <p className="lead text-center">Add any developer/programming positions that you have had in the past</p>
+              <small className="d-block pb-3">* are required field</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   name="company"
@@ -96,9 +115,9 @@ class AddExperience extends Component {
                   disabled={this.state.disabled ? "disabled" : ""}
                 />
 
-                <div class="form-check mb-4">
+                <div className="form-check mb-4">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="checkbox"
                     name="current"
                     value={this.state.current}
@@ -106,7 +125,7 @@ class AddExperience extends Component {
                     onChange={this.onChecked}
                     id="current"
                   />
-                  <label class="form-check-label" htmtFor="current">
+                  <label className="form-check-label" htmlFor="current">
                     Current Job
                   </label>
                 </div>
@@ -119,7 +138,7 @@ class AddExperience extends Component {
                   error={errors.description}
                   info="Tell us about the position"
                 />
-                <input type="submit" value="Submit" class="btn btn-info btn-block mt-4" />
+                <input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
@@ -130,6 +149,7 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+  addExperience: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 }
@@ -139,4 +159,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+export default connect(mapStateToProps, { addExperience })(withRouter(AddExperience));
