@@ -75,7 +75,7 @@ class AddEducation extends Component {
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   name="school"
-                  placeholder="*Sschool"
+                  placeholder="*School"
                   value={this.state.school}
                   onChange={this.onChange}
                   error={errors.school}
