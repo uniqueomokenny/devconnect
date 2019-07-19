@@ -34,8 +34,7 @@ class ProfileAbout extends Component {
 }
 
 ProfileAbout.propTypes = {
-  profile: PropTypes.object.isRequired,
-  getProfileByHandle: PropTypes.func.isRequired
+  profile: PropTypes.object.isRequired
 }
 
 export default ProfileAbout;
