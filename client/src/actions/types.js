@@ -11,3 +11,4 @@ export const GET_POSTS = 'get_posts';
 export const GET_POST = 'get_post';
 export const ADD_POST = 'add_post';
 export const DELETE_POST = 'delete_post';
+export const CLEAR_ERRORS = "clear_errors"
